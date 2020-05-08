@@ -1,20 +1,19 @@
 # dnd_app_clone
 
-A new Flutter project.
+A Project build as a clone from a project saw on twitter.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project will show how a user can sign in with
 
-A few resources to get you started if this is your first Flutter project:
+- Google Sign In
+- Facebook Sign In
+- Sign In with Email
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Screenshots
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-<!-- <p float="left">
-  <img src="https://i.imgur.com/qonwyrb.png" width="200" />
-</p> -->
+<p float="left">
+  <img src="assets/Screenshots/Screenshot1.png" width="200" />
+  <img src="assets/Screenshots/Screenshot2.png" width="200" />
+  <img src="assets/Screenshots/Screenshot3.png" width="200" />
+</p>
