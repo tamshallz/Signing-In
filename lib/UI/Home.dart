@@ -15,7 +15,7 @@ class Home extends StatelessWidget {
             children: <Widget>[
               TopSectionWidget(),
               SizedBox(height: 20),
-               DownSectionWidget(),
+              DownSectionWidget(),
             ],
           ),
         ),
