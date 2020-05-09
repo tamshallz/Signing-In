@@ -9,7 +9,8 @@ import 'package:line_awesome_icons/line_awesome_icons.dart';
 
 import 'CustomRichText.dart';
 
-//
+//Facebook Provider package
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class DownSectionWidget extends StatefulWidget {
   @override
@@ -21,6 +22,32 @@ class _DownSectionWidgetState extends State<DownSectionWidget> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+  // Facebook Sign In
+  bool _isLoggedIn = false;
+  Map userProfile;
+  final facebookLogin = FacebookLogin();
+
+  //
+
+  _loginWithFB() async {
+    final result = await facebookLogin.logIn(['email']);
+
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        setState(() {
+          _isLoggedIn = true;
+        });
+        break;
+
+      case FacebookLoginStatus.cancelledByUser:
+        setState(() => _isLoggedIn = false);
+        break;
+      case FacebookLoginStatus.error:
+        setState(() => _isLoggedIn = false);
+        break;
+    }
+  }
+
   //
   Future<FirebaseUser> _signIn(BuildContext context) async {
     Scaffold.of(context).showSnackBar(SnackBar(
@@ -29,6 +56,7 @@ class _DownSectionWidgetState extends State<DownSectionWidget> {
 
     //
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
@@ -61,6 +89,8 @@ class _DownSectionWidgetState extends State<DownSectionWidget> {
         MaterialPageRoute(
           builder: (context) => ProfileScreen(detailUser: details),
         ));
+
+    // return 'signInWithGoogle succeeded: $user';
   }
 
   //
@@ -97,14 +127,9 @@ and projects from any device. it's free.''',
                   .catchError((e) => print(e)),
             ),
             CustomTextField(
-              buttonIcon: Images.facebook,
-              buttonText: 'Continue with Facebook',
-              onTap: () => _signIn(context)
-                  .then(
-                    (FirebaseUser user) => print(user),
-                  )
-                  .catchError((e) => print(e)),
-            ),
+                buttonIcon: Images.facebook,
+                buttonText: 'Continue with Facebook',
+                onTap: () => _loginWithFB()),
             CustomOutlineTextField(
               onTap: () => _signIn(context)
                   .then(
