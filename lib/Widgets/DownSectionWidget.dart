@@ -1,3 +1,5 @@
+import 'package:dnd_app_clone/UI/ProfileScreen.dart';
+import 'package:dnd_app_clone/UI/SignUp.dart';
 import 'package:dnd_app_clone/Widgets/TextField.dart';
 import 'package:dnd_app_clone/utils/Colors.dart';
 import 'package:dnd_app_clone/utils/Images.dart';
@@ -5,13 +7,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 
 import 'CustomRichText.dart';
 
 //Facebook Provider package
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
+//
 class DownSectionWidget extends StatefulWidget {
   @override
   _DownSectionWidgetState createState() => _DownSectionWidgetState();
@@ -131,12 +133,12 @@ and projects from any device. it's free.''',
                 buttonText: 'Continue with Facebook',
                 onTap: () => _loginWithFB()),
             CustomOutlineTextField(
-              onTap: () => _signIn(context)
-                  .then(
-                    (FirebaseUser user) => print(user),
-                  )
-                  .catchError((e) => print(e)),
-            )
+                onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignUp(),
+                      ),
+                    ))
           ],
         ),
       ),
@@ -158,72 +160,4 @@ class UserDetails {
 class ProviderDetails {
   final String provideDetails;
   ProviderDetails(this.provideDetails);
-}
-
-class ProfileScreen extends StatelessWidget {
-  //
-  final UserDetails detailUser;
-
-  const ProfileScreen({Key key, this.detailUser}) : super(key: key);
-
-  //
-  @override
-  Widget build(BuildContext context) {
-    //
-    final GoogleSignIn _gSignIn = GoogleSignIn();
-
-    //
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(detailUser.userName),
-
-        // To not have a leading back button, you do this
-        automaticallyImplyLeading: false,
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(LineAwesomeIcons.sign_out),
-              onPressed: () {
-                _gSignIn.signOut();
-                print('Signed Out');
-                Navigator.pop(context);
-              })
-        ],
-      ),
-
-      //
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CircleAvatar(
-              backgroundImage: NetworkImage(detailUser.photoUrl),
-              radius: 50,
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Name: ' + detailUser.userName,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 20),
-            ),
-            Text(
-              'Email: ' + detailUser.userEmail,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 20),
-            ),
-            Text(
-              'Provider: ' + detailUser.providerDetails,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 20),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
